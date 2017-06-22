@@ -1,8 +1,8 @@
 package org.jbehave.core.configuration.groovy;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 import groovy.lang.GroovyClassLoader;
 

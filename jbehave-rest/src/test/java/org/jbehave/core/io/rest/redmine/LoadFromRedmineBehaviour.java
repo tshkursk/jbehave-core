@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.startsWith;
 
 public class LoadFromRedmineBehaviour {
 

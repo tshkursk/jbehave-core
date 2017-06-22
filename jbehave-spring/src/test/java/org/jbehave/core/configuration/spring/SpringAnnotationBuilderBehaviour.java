@@ -1,5 +1,9 @@
 package org.jbehave.core.configuration.spring;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import org.jbehave.core.annotations.Configure;
 import org.jbehave.core.annotations.UsingSteps;
 import org.jbehave.core.annotations.spring.UsingSpring;
@@ -24,7 +28,6 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.jbehave.core.reporters.Format.*;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
@@ -37,9 +40,9 @@ public class SpringAnnotationBuilderBehaviour {
 		SpringAnnotationBuilder builder = new SpringAnnotationBuilder(
 				AnnotatedUsingSpring.class);
 		Configuration configuration = builder.buildConfiguration();
-		assertThat(configuration.storyControls().dryRun(), is(true));
+		assertThat(configuration.storyControls().dryRun(), equalTo(true));
 		assertThat(configuration.storyControls().skipScenariosAfterFailure(),
-				is(true));
+		        equalTo(true));
 		assertThat(configuration.failureStrategy(),
 				instanceOf(SilentlyAbsorbingFailure.class));
 		assertThat(configuration.storyLoader(), instanceOf(LoadFromURL.class));
@@ -68,7 +71,7 @@ public class SpringAnnotationBuilderBehaviour {
 		assertThat(configuration.storyReporterBuilder().viewResources()
 				.getProperty("decorateNonHtml"), equalTo("true"));
 		assertThat(configuration.storyReporterBuilder().reportFailureTrace(),
-				is(true));
+		        equalTo(true));
 	}
 
 	private void assertThatDateIsConvertedWithFormat(

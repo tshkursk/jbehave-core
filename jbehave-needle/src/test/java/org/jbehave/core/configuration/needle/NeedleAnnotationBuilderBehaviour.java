@@ -1,7 +1,11 @@
 package org.jbehave.core.configuration.needle;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -182,7 +186,7 @@ public class NeedleAnnotationBuilderBehaviour {
         final ValueGetter getter = ((FooStepsWithDependency) ((Steps) buildCandidateSteps
                 .get(0)).instance()).getGetter();
         assertThat(getter, is(notNullValue()));
-        assertThat((String) getter.getValue(), is(ValueGetter.VALUE));
+		assertThat((String) getter.getValue(), equalTo(ValueGetter.VALUE));
     }
 
     private void assertThatStepsInstancesAre(

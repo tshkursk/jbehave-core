@@ -30,10 +30,10 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
 
 public class ReportTransformBehaviour {
     private static final String TESTCASE_COUNT = "count(//testcase)";

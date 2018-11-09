@@ -239,7 +239,7 @@ public class MarkUnmatchedStepsAsPendingBehaviour {
         PendingStep pendingStep = (PendingStep) step;
         assertThat(pendingStep.stepAsString(), equalTo(stepAsString));
         assertThat(pendingStep.previousNonAndStepAsString(), equalTo(previousNonAndStep));
-        Throwable throwable = step.perform(null).getFailure();
+        Throwable throwable = step.perform(null, null).getFailure();
         assertThat(throwable, instanceOf(PendingStepFound.class));
         assertThat(throwable.getMessage(), equalTo(stepAsString));
 
@@ -258,7 +258,7 @@ public class MarkUnmatchedStepsAsPendingBehaviour {
         List<Step> executableSteps = stepCollector.collectScenarioSteps(steps, createScenario(stepAsString), parameters);
         // Then
         assertThat(executableSteps.size(), equalTo(1));
-        StepResult result = executableSteps.get(0).perform(null);
+        StepResult result = executableSteps.get(0).perform(null, null);
         assertThat(result, Matchers.instanceOf(Ignorable.class));
     }
 
@@ -275,7 +275,7 @@ public class MarkUnmatchedStepsAsPendingBehaviour {
         List<Step> executableSteps = stepCollector.collectScenarioSteps(steps, createScenario(stepAsString), parameters);
         // Then
         assertThat(executableSteps.size(), equalTo(1));
-        StepResult result = executableSteps.get(0).perform(null);
+        StepResult result = executableSteps.get(0).perform(null, null);
         assertThat(result, Matchers.instanceOf(Comment.class));
     }
 
@@ -518,12 +518,12 @@ public class MarkUnmatchedStepsAsPendingBehaviour {
         ScenarioType scenarioType = ScenarioType.NORMAL;
         List<Step> beforeSteps = stepCollector.collectBeforeOrAfterScenarioSteps(asList((CandidateSteps) steps), meta,
                 Stage.BEFORE, scenarioType);
-        beforeSteps.get(0).perform(null);
+        beforeSteps.get(0).perform(null, null);
         assertThat(steps.value, equalTo("before"));
 
         List<Step> afterSteps = stepCollector.collectBeforeOrAfterScenarioSteps(asList((CandidateSteps) steps), meta,
                 Stage.AFTER, scenarioType);
-        afterSteps.get(0).perform(null);
+        afterSteps.get(0).perform(null, null);
         assertThat(steps.value, equalTo("after"));
     }
 
@@ -537,14 +537,14 @@ public class MarkUnmatchedStepsAsPendingBehaviour {
         ScenarioType scenarioType = ScenarioType.NORMAL;
         List<Step> beforeSteps = stepCollector.collectBeforeOrAfterScenarioSteps(asList((CandidateSteps) steps), meta,
                 Stage.BEFORE, scenarioType);
-        beforeSteps.get(0).doNotPerform(failureOccurred);
+        beforeSteps.get(0).doNotPerform(null, failureOccurred);
         assertThat(steps.value, equalTo("before"));
         assertThat(steps.exception, equalTo(failureOccurred));
 
         List<Step> afterSteps = stepCollector.collectBeforeOrAfterScenarioSteps(asList((CandidateSteps) steps), meta,
                 Stage.AFTER, scenarioType);
         failureOccurred = new UUIDExceptionWrapper();
-        afterSteps.get(0).doNotPerform(failureOccurred);
+        afterSteps.get(0).doNotPerform(null, failureOccurred);
         assertThat(steps.value, equalTo("after"));
         assertThat(steps.exception, equalTo(failureOccurred));
     }
@@ -557,12 +557,12 @@ public class MarkUnmatchedStepsAsPendingBehaviour {
 
         List<Step> beforeSteps = stepCollector.collectBeforeOrAfterStorySteps(asList((CandidateSteps) steps), story,
                 Stage.BEFORE, false);
-        beforeSteps.get(0).perform(null);
+        beforeSteps.get(0).perform(null, null);
         assertThat(steps.value, equalTo("before"));
 
         List<Step> afterSteps = stepCollector.collectBeforeOrAfterStorySteps(asList((CandidateSteps) steps), story,
                 Stage.AFTER, false);
-        afterSteps.get(0).perform(null);
+        afterSteps.get(0).perform(null, null);
         assertThat(steps.value, equalTo("after"));
     }
 
@@ -575,14 +575,14 @@ public class MarkUnmatchedStepsAsPendingBehaviour {
         List<Step> beforeSteps = stepCollector.collectBeforeOrAfterStorySteps(asList((CandidateSteps) steps), story,
                 Stage.BEFORE, false);
         UUIDExceptionWrapper failureOccurred = new UUIDExceptionWrapper();
-        beforeSteps.get(0).doNotPerform(failureOccurred);
+        beforeSteps.get(0).doNotPerform(null, failureOccurred);
         assertThat(steps.value, equalTo("before"));
         assertThat(steps.exception, equalTo(failureOccurred));
 
         List<Step> afterSteps = stepCollector.collectBeforeOrAfterStorySteps(asList((CandidateSteps) steps), story,
                 Stage.AFTER, false);
         failureOccurred = new UUIDExceptionWrapper();
-        afterSteps.get(0).doNotPerform(failureOccurred);
+        afterSteps.get(0).doNotPerform(null, failureOccurred);
         assertThat(steps.value, equalTo("after"));
         assertThat(steps.exception, equalTo(failureOccurred));
     }

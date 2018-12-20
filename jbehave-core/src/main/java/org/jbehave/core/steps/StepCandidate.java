@@ -1,6 +1,7 @@
 package org.jbehave.core.steps;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -185,10 +186,13 @@ public class StepCandidate {
             Map<String, String> namedParameters, List<StepCandidate> allCandidates, String[] composedSteps) {
         Map<String, String> matchedParameters = stepCreator.matchedParameters(method,
                 keywords.stepWithoutStartingWord(stepAsString), namedParameters);
-        matchedParameters.putAll(namedParameters);
+
+        Map<String, String> mergedParameters = new HashMap<>(namedParameters);
+        mergedParameters.putAll(matchedParameters);
+
         String previousNonAndStep = null;
         for (String composedStep : composedSteps) {
-            addComposedStep(steps, composedStep, previousNonAndStep, matchedParameters, allCandidates);
+            addComposedStep(steps, composedStep, previousNonAndStep, mergedParameters, allCandidates);
             if (!(keywords.isAndStep(stepAsString) || keywords.isIgnorableStep(stepAsString))) {
                 // only update previous step if not AND or IGNORABLE step
                 previousNonAndStep = stepAsString;
